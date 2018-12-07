@@ -31,6 +31,12 @@
         <td>{{ employee.role }}</td>
         <td>{{ employee.departament }}</td>
         <td>{{ employee.salary }}</td>
+        <router-link :to="{ name: 'DeleteEmployee', params: {id: employee.id } }">
+           <td><button class="btn btn-danger">X</button></td>
+        </router-link>
+        <router-link :to="{ name: 'UpdateEmployee', params: {id: employee.id } }">
+          <td><button class="btn btn-success">U</button></td>
+        </router-link>
       </tr>
 
     </tbody>
@@ -68,24 +74,7 @@ export default {
   })
  },
  methods: {
-   deleteEmployee() {
-     axios.delete('http://localhost:3000/api/v1/employees/7', {
 
-   })
-   },
-    updateEmployee() {
-        axios.put('http://localhost:3000/api/v1/employees/', {
-          name: this.name,
-          role: this.role, 
-          departament: this.department, 
-          salary: parseInt(this.salary)})
-          .then(function (response) {
-            console.log(response);
-          })
-          .catch(function (error) {
-            console.log(error);
-          });
-   },
    
  }
 }

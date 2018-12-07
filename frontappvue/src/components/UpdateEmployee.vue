@@ -30,11 +30,11 @@
                                 placeholder="Salary">
                     </b-form-input>
                 </b-form-group>   
-                <b-button  v-on:click="createEmployee()" variant="primary">Create</b-button>
+                <b-button  v-on:click="updateEmployee()" variant="primary">Update</b-button>
                 </b-form>
                 <div class=" mt-5" v-if="showAlert === true">
                     <b-alert show variant="success">
-                    <h4 class="alert-heading">Employee created with success!</h4>
+                    <h4 class="alert-heading">Employee updated with success!</h4>
                     <p>
                         Now, you can see him in the employees table
                     </p>
@@ -54,6 +54,7 @@
 <script>
 import axios from 'axios'
 export default {
+    props: ['id'],
     data() {
         return {
             name: null,
@@ -84,9 +85,9 @@ export default {
         }
     },
     methods:{
-        createEmployee() {
+        updateEmployee() {
             if(this.name !== null && this.role !== null && this.department !== null && this.salary !== null) {
-                axios.post('http://localhost:3000/api/v1/employees/', {
+                axios.put('http://localhost:3000/api/v1/employees/' + this.$props.id, {
                     name: this.name,
                     role: this.role, 
                     departament: this.department, 
@@ -99,10 +100,8 @@ export default {
                         console.log(error);
                     });
                 this.showAlert = true
-                this.showIncompleted = false
             } else {
                 this.showIncompleted = true
-                this.showAlert = false
             }
             this.name = null
             this.role = null
