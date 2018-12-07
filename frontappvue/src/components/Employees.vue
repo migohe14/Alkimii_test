@@ -1,10 +1,22 @@
 <template>
  <div>
-   <div class="mb-3">
-       <button v-if="showTable == true" class="btn btn-primary" v-on:click="showFormEmployee()">Create employee</button>
-       <button v-if="showTable == false" class="btn btn-secondary" v-on:click="showTableEmployee()">Show employees</button>
+   <div class="row">
+    <div class="col mb-3">
+      <b-form>
+          <b-form-group>
+              <b-form-select v-model="department" :options="departments" class="mb-3">
+              </b-form-select>
+          </b-form-group> 
+      </b-form>
+  </div>
+   <div class="col mb-3">
+        <router-link :to="{name:'CreateEmployee'}">
+          <button class="btn btn-primary">Create employee</button>
+        </router-link>
    </div>
-  <table v-if="showTable == true" class="table">
+ 
+  </div>
+  <table class="table">
     <thead class="thead-light">
       <tr>
         <th scope="col">Name</th>
@@ -14,7 +26,7 @@
       </tr>
     </thead>
     <tbody v-for="employee in employees" :key="employee.id">
-      <tr>
+      <tr v-if="employee.departament == department || department == null">
         <td>{{ employee.name }}</td>
         <td>{{ employee.role }}</td>
         <td>{{ employee.departament }}</td>
@@ -24,34 +36,6 @@
     </tbody>
   </table>
   
-    <b-form v-if="showTable == false">
-      <b-form-group>
-        <b-form-input 
-                      type="text"
-                      v-model="name"
-                      required
-                      placeholder="name">
-        </b-form-input>
-      </b-form-group>
-      <b-form-group>
-        <b-form-select v-model="role" :options="roles" class="mb-3">
-        </b-form-select>
-      </b-form-group> 
-      <b-form-group>
-          <b-form-select v-model="department" :options="departments" class="mb-3">
-          </b-form-select>
-      </b-form-group> 
-      <b-form-group>
-        <b-form-input 
-                      type="text"
-                      v-model="salary"
-                      required
-                      placeholder="salary">
-        </b-form-input>
-      </b-form-group>   
-      <b-button  v-on:click="createEmployee()" variant="primary">Create</b-button>
-      <!-- <b-button v-on:click="onReset()" variant="danger">Limpiar búsqueda</b-button> -->
-    </b-form>
 
  </div>
 </template>
@@ -62,64 +46,45 @@ export default {
  data() {
   return {
    employees: [],
-   name: null,
-   role: null,
    department: null,
-   salary: null,
-   showTable: true,
-   roles: [
-        { value: null, text: 'Please select the role' },
-        { value: 'Waiter', text: 'Waiter' },
-        { value: 'Chef', text: 'Chef' },
-        { value: 'Office Assistant', text: 'Office Assistant' },
-        { value: 'Senior Manager Marketing', text: 'Senior Manager Marketing' },
-        { value: 'Accountant', text: 'Accountant' },
-
-    ],
    departments: [
-        { value: null, text: 'Please select the department' },
-        { value: 'Restaurant service', text: 'Restaurant service' },
-        { value: 'Housekeeping Department', text: 'Housekeeping Department' },
-        { value: 'Front Office Department', text: 'Front Office Department' },
-        { value: 'Sales and marketing', text: 'Sales and marketing' },
-        { value: 'Account and finance', text: 'Account and finance' },
+                { value: null, text: 'All departments' },
+                { value: 'Restaurant service', text: 'Restaurant service' },
+                { value: 'Housekeeping Department', text: 'Housekeeping Department' },
+                { value: 'Front Office Department', text: 'Front Office Department' },
+                { value: 'Sales and marketing', text: 'Sales and marketing' },
+                { value: 'Account and finance', text: 'Account and finance' },
 
-    ]
+            ],
   }
  },
  created() {
   axios.get('http://localhost:3000/api/v1/employees/') 
   .then(response => {
    this.employees = response.data
-   
-   console.log(response.data)
-  })
+   })
  .catch(e => {
      console.log(e)
   })
  },
  methods: {
-   showFormEmployee() {
-     this.showTable = false
-   },
-   showTableEmployee() {
-     this.showTable = true
-   },
-   createEmployee() {
-     console.log(this.name)
-     console.log(this.role)
-     console.log(this.department)
-
-   },
-   fire() {
+   deleteEmployee() {
      axios.delete('http://localhost:3000/api/v1/employees/7', {
 
    })
    },
-    update() {
-     axios.put('http://localhost:3000/api/v1/employees/7', {
-      employee: {name: "CR7", role: "footballer", departament: "sports", salary: 9999999}
-      })
+    updateEmployee() {
+        axios.put('http://localhost:3000/api/v1/employees/', {
+          name: this.name,
+          role: this.role, 
+          departament: this.department, 
+          salary: parseInt(this.salary)})
+          .then(function (response) {
+            console.log(response);
+          })
+          .catch(function (error) {
+            console.log(error);
+          });
    },
    
  }

@@ -1,7 +1,7 @@
 import Vue from 'vue'
 import Router from 'vue-router'
-import Home from '@/components/Home'
-// import Employees from '@/components/Employees'
+import Employees from '@/components/Employees'
+import CreateEmployee from '@/components/CreateEmployee'
 
 
 Vue.use(Router)
@@ -10,13 +10,13 @@ export default new Router({
   routes: [
     {
       path: '/',
-      name: 'Home',
-      component: Home
+      name: 'Employees',
+      component: Employees
     },
-  //   {                         
-  //   path: '/employees',
-  //   name: 'Employees',
-  //   component: Employees
-  //  }
+    {                         
+    path: '/createemployee',
+    name: 'CreateEmployee',
+    component: CreateEmployee
+   }
   ]
 })
