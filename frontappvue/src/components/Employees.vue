@@ -31,6 +31,12 @@
         <td>{{ employee.role }}</td>
         <td>{{ employee.departament }}</td>
         <td>{{ employee.salary }}</td>
+        <td>
+          
+        </td>
+     
+      </tr>
+      <tr>
         <router-link :to="{ name: 'DeleteEmployee', params: {id: employee.id } }">
            <td><button class="btn btn-danger">X</button></td>
         </router-link>

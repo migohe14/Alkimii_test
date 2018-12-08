@@ -1,7 +1,13 @@
 <template>
 <div>
-    <p>Confirm?</p>
-        <button v-if="showConfirm == true" v-on:click="deleteEmployee()" class="btn">Delete</button>
+    <div v-if="showConfirm == true">
+        <p>Confirm?</p>
+        <button v-on:click="deleteEmployee()" class="btn">Delete</button>
+        <router-link :to="{ name: 'Employees'}">
+             <button class="btn btn-primary">Back</button>
+        </router-link>
+    </div>
+    
             <div class=" mt-5" v-if="showConfirm == false">
                     <b-alert show variant="success">
                     <h4 class="alert-heading">Employee deleted with success!</h4>
