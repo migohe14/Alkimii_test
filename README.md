@@ -1,5 +1,5 @@
 # Alkimii_test
-REST API json with Ruby on Rails and frontend with Vue js and Bootstrap
+REST API json with Ruby on Rails and frontend with Vue js and Bootstrap (two apps, two repos)
 
 Run the vue app in Alkimii_test/frontappvue (npm install and npm run dev)
 
